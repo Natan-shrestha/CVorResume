@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+#homeLeftDiv::-webkit-scrollbar {
+  display: none;
+}
+
+#homeRightDiv::-webkit-scrollbar {
+  display: none;
+}
+
+input {
+  display: block;
+  border: 1px solid rgb(221, 220, 220);
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+th,
+td {
+  border: 1px solid rgb(232, 232, 238);
+}
+
+@media only screen and (max-width: 800px) {
+  #home {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  #homeRightDiv {
+    width: 100%;
+    height: 100%;
+  }
+
+  #homeLeftDiv {
+    width: 100%;
+  }
+
+  #menuButton {
+    display: hidden;
+  }
+
+  #landingMain {
+    font-size: small;
+    flex-direction: column;
+  }
+
+  #landingH1 {
+    /* height: 40%; */
+    color: blue;
+    width: 100vw;
+    padding: 0px 10px;
+    font-size: 20px;
+    font-weight: 700;
+    /* padding-left: 100px; */
+  }
+
+  #landingPara {
+    padding: 10px;
+    /* padding-left: 105px; */
+    font-size: small;
+    width: 100vw;
+  }
+
+  #menuButton {
+    display: none;
+    /* padding: 5px; */
+    /* height: 20px;
+    width: 100px; */
+    /* margin-top: 20px; */
+  }
+
+  #createButton {
+    padding: 2px;
+    font-size: 7px;
+    width: 100px;
+    margin-left: 140px;
+    /* height: 50px; */
+    /* display: flex; */
+    /* display: hidden; */
+  }
+
+  #navbarMain {
+    justify-content: space-around;
+  }
+
+  #learnButton {
+    display: none;
+  }
+
+  #imgContainerButtons {
+    flex-direction: column;
+  }
+
+  #landingImg {
+    width: 100vw;
+  }
+
+  #landingSection {
+    width: 100%;
+  }
+
+  #nameInputField {
+    flex-direction: column;
+  }
+}
+
+.noScrollBar::-webkit-scrollbar {
+  display: none;
+}
