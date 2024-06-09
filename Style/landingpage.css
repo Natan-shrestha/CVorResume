@@ -1,0 +1,25 @@
+.typewriter .title-text {
+    overflow: hidden;
+    border-right: .15em solid orange;
+    white-space: nowrap;
+    /* margin: 0 auto; Remove this line */
+    letter-spacing: .10em;
+    animation: typing 3.5s steps(40, end) infinite alternate,
+                blink-caret .75s step-end infinite;
+}
+  /* The typing effect */
+  @keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+  }
+  
+  /* The typewriter cursor effect */
+  @keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: orange; }
+  }
+  
+  #landingH1, #landingPara {
+    margin: 0;
+    padding: 0;
+}
