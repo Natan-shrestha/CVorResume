@@ -149,7 +149,7 @@ const HomeRight = (props, ref) => {
                       <p><span className='text-black-400'>Project Name: </span>{project.projectName}</p>
                       <p><span className='text-black-400'>Description: </span>{project.description}</p>
                       <div>
-                        <span className='text-black-400'>Technologies Used: </span>
+                      <span className="text-black-400">Technologies Used: </span>
                         {project.technologiesUsed.map((tech, index) => (
                           <Fragment key={index}>
                             <span>{tech}, </span>
@@ -161,8 +161,18 @@ const HomeRight = (props, ref) => {
                   ))}
                 </article>
               {/* achivements */}
-              <article className='pt-3'>
-                <p> <span className='text-[12px] font-bold text-black-700 pt-3'>Achivements : </span> {state.achivements}</p>
+              <article className="pt-3">
+                <p>
+                  <span className="text-[12px] font-bold text-black-700 pt-3">
+                    Achievements :
+                  </span>{" "}
+                  {state.achievements.map((achievement, index) => (
+                    <span key={index} className="flex items-center">
+                      <span className="mr-8">{achievement.year}</span>
+                      <span>• {achievement.description}</span>
+                    </span>
+                  ))}
+                </p>
               </article>
             </div>
           </section>
