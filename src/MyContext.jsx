@@ -57,14 +57,15 @@ const MyContext = ({ children }) => {
         },
       ],
 
-      projects: [
-        {
-          projectName: "",
-          description: "",
-          technologiesUsed: [],
-          team: "",
-        },
-      ],
+      projects: [],
+
+      
+    achievements: [
+      {
+        year: "",
+        description: "",
+      },
+    ],
     }
   )
   
