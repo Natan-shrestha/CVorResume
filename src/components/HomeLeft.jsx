@@ -154,11 +154,11 @@ const HomeLeft = (props, ref) => {
   let handleChange = (e) => {
     let { name, value } = e.target;
     let nameParts = name.split(".");
-    if (nameParts.length === 2) {
-      let [arrayName, index] = nameParts;
+    if (nameParts.length === 3) {
+      let [arrayName, index, fieldName] = nameParts;
       setState((prevState) => {
         let updatedArray = [...prevState[arrayName]];
-        updatedArray[index] = { ...updatedArray[index], [nameParts[2]]: value };
+        updatedArray[index] = { ...updatedArray[index], [fieldName]: value };
         return { ...prevState, [arrayName]: updatedArray };
       });
     } else {
@@ -632,18 +632,18 @@ const HomeLeft = (props, ref) => {
                 <Typography><strong>Experience</strong></Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Typography>
-                  {state.experiences.map((experience, index) => (
-                    <div key={index} className="shadow p-4 mb-4 rounded" style={{ boxShadow: 'rgba(0, 0, 0, 0.05) 0px 0px 0px 1px' }}>
-                      <div className="flex">
-                        <input
-                          type="text"
-                          placeholder="Company name"
-                          value={experience.companyName}
-                          name={`experiences[${index}].companyName`}
-                          onChange={handleChange}
-                          className="w-[90%]"
-                        />
+          <Typography>
+            {state.experiences.map((experience, index) => (
+              <div key={index} className="shadow p-4 mb-4 rounded" style={{ boxShadow: 'rgba(0, 0, 0, 0.05) 0px 0px 0px 1px' }}>
+                <div className="flex">
+                  <input
+                    type="text"
+                    placeholder="Company name"
+                    value={experience.companyName}
+                    name={`experiences.${index}.companyName`}
+                    onChange={handleChange}
+                    className="w-[90%]"
+                  />
                         <div className="flex w-[90%]">
                           <DatePicker
                             placeholderText="Start Date"
@@ -680,14 +680,21 @@ const HomeLeft = (props, ref) => {
                         </div>
                       </div>
                       <input
-                        type="text"
-                        placeholder="Key responsibilities"
-                        value={experience.keyResponsibility}
-                        name={`experiences[${index}].keyResponsibility`}
-                        onChange={handleChangeArray}
-                        className="w-[90%]"
-                      />
-                    </div>
+                      type="text"
+                      placeholder="Key responsibilities"
+                      value={experience.keyResponsibility.join(", ")}
+                      name={`experiences.${index}.keyResponsibility`}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setState((prevState) => {
+                          const updatedExperiences = [...prevState.experiences];
+                          updatedExperiences[index].keyResponsibility = value.split(",").map((item) => item.trim());
+                          return { ...prevState, experiences: updatedExperiences };
+                        });
+                      }}
+                      className="w-[90%]"
+                    />
+                  </div>
                   ))}
                   <button
                     onClick={(e) => {
@@ -713,101 +720,146 @@ const HomeLeft = (props, ref) => {
             </Accordion>
 
             {/* Projects */}
-<Accordion>
-  <AccordionSummary
-    expandIcon={<ArrowDropDownIcon />}
-    aria-controls="panel2-content"
-    id="panel2-header"
-  >
-    <Typography><strong>Projects</strong></Typography>
-  </AccordionSummary>
-  <AccordionDetails>
-    <Typography>
-      {state.projects.map((project, index) => (
-        <div key={index} className="shadow p-4 mb-4 rounded" style={{ boxShadow: 'rgba(0, 0, 0, 0.05) 0px 0px 0px 1px' }}>
-          <div className='flex'>
-            <input
-              type="text"
-              placeholder='Project name'
-              value={project.projectName}
-              name={`projects[${index}].projectName`}
-              onChange={handleChange}
-              className='w-[45%]'
-            />
-            <input
-              type="text"
-              placeholder='Description'
-              value={project.description}
-              name={`projects[${index}].description`}
-              onChange={handleChange}
-              className='w-[45%]'
-            />
-          </div>
-          <div className='flex'>
-            <input
-              type="text"
-              placeholder='Technologies used'
-              value={project.technologiesUsed}
-              name={`projects[${index}].technologiesUsed`}
-              onChange={handleChangeArray}
-              className='w-[45%]'
-            />
-            <input
-              type="text"
-              placeholder='Team size'
-              value={project.team}
-              name={`projects[${index}].team`}
-              onChange={handleChangeNumber}
-              onKeyDown={handleKeyPressTeam}
-              className='w-[45%]'
-            />
-          </div>
-        </div>
-      ))}
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          setState((prevState) => ({
-            ...prevState,
-            projects: [
-              ...prevState.projects,
-              {
-                projectName: "",
-                description: "",
-                technologiesUsed: [],
-                team: "",
-              },
-            ],
-          }));
-        }}
-      >
-        Add Project
-      </button>
-    </Typography>
-  </AccordionDetails>
-</Accordion>
-
             <Accordion>
-              <AccordionSummary
-                expandIcon={<ArrowDropDownIcon />}
-                aria-controls="panel2-content"
-                id="panel2-header"
-              >
-                <Typography>Other Achivements</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>
-                  <input
-                    type="text"
-                    placeholder='Achivements'
-                    value={state.achivements}
-                    name='achivements'
-                    onChange={handleChange}
-                    className='w-[95%]'
-                  />
-                </Typography>
-              </AccordionDetails>
-            </Accordion>
+            <AccordionSummary
+              expandIcon={<ArrowDropDownIcon />}
+              aria-controls="panel2-content"
+              id="panel2-header"
+            >
+              <Typography><strong>Project</strong></Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                {state.projects.map((project, index) => (
+                  <div
+                    key={index}
+                    className="shadow p-4 mb-4 rounded"
+                    style={{ boxShadow: 'rgba(0, 0, 0, 0.05) 0px 0px 0px 1px' }}
+                  >
+                    <div className="flex">
+                      <input
+                        type="text"
+                        placeholder="Project name"
+                        value={project.projectName}
+                        name={`projects.${index}.projectName`}
+                        onChange={handleChange}
+                        className="w-[45%]"
+                      />
+                      <input
+                        type="text"
+                        placeholder="Description"
+                        value={project.description}
+                        name={`projects.${index}.description`}
+                        onChange={handleChange}
+                        className="w-[45%]"
+                      />
+                    </div>
+                    <div className="flex">
+                      <input
+                        type="text"
+                        placeholder="Technologies used"
+                        value={project.technologiesUsed.join(", ")}
+                        name={`projects.${index}.technologiesUsed`}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          setState((prevState) => {
+                            const updatedProjects = [...prevState.projects];
+                            updatedProjects[index].technologiesUsed = value.split(",").map((item) => item.trim());
+                            return { ...prevState, projects: updatedProjects };
+                          });
+                        }}
+                        className="w-[45%]"
+                      />
+                      <input
+                        type="text"
+                        placeholder="Team size"
+                        value={project.team}
+                        name={`projects.${index}.team`}
+                        onChange={handleChange}
+                        className="w-[45%]"
+                      />
+                    </div>
+                  </div>
+                      ))}
+                      <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setState((prevState) => ({
+                      ...prevState,
+                      projects: [
+                        ...prevState.projects,
+                        {
+                          projectName: "",
+                          description: "",
+                          technologiesUsed: [],
+                          team: "",
+                        },
+                      ],
+                    }));
+                  }}
+                >
+                  Add Project
+                </button>
+                    </Typography>
+                  </AccordionDetails>
+                </Accordion>
+
+
+                {/* Achivements */}
+                <Accordion>
+                <AccordionSummary
+                  expandIcon={<ArrowDropDownIcon />}
+                  aria-controls="panel2-content"
+                  id="panel2-header"
+                >
+                  <Typography><strong>Other Achievements</strong></Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography>
+                    {state.achievements.map((achievement, index) => (
+                      <div key={index} className="flex items-center mb-2">
+                        <input
+                          type="number"
+                          placeholder="Year"
+                          value={achievement.year}
+                          name={`achievements.${index}.year`}
+                          onChange={handleChange}
+                          className="w-20 mr-2"
+                          min={1900}
+                          max={2100}
+                        />
+                        <div className="flex-1">
+                          <input
+                            type="text"
+                            placeholder="Achievement"
+                            value={achievement.description}
+                            name={`achievements.${index}.description`}
+                            onChange={handleChange}
+                            className="w-full"
+                          />
+                        </div>
+                      </div>
+                    ))}
+                    <div className="flex items-center">
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setState((prevState) => ({
+                            ...prevState,
+                            achievements: [
+                              ...prevState.achievements,
+                              { year: "", description: "" },
+                            ],
+                          }));
+                        }}
+                        className="mr-2"
+                      >
+                        Add Achievement
+                      </button>
+                    </div>
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
           </div>
             <button className="button" type="button" onClick={downloadPDF}>
             <span className="button__text">Download</span>
