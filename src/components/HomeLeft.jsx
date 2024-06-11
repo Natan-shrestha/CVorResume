@@ -18,9 +18,9 @@ import "../../Style/remove.css";
 
 const HomeLeft = (props, ref) => {
   console.log(ref.current);
-  const navigate = useNavigate()
-  let userData = useContext(myContext)
-  let { state, setState, selectedImage, setSelectedImage, isLoggedIn, setIsLoggedIn } = userData
+  const navigate = useNavigate();
+  let userData = useContext(myContext);
+  let { state, setState, selectedImage, setSelectedImage, isLoggedIn, setIsLoggedIn, skillRating, setSkillRating } = userData;
 
   const handleImage = (e) => {
     const file = e.target.files[0]; // Get the first selected file
@@ -547,37 +547,49 @@ const HomeLeft = (props, ref) => {
 
             {/* Skills */}
             <Accordion>
-            <AccordionSummary
-              expandIcon={<ArrowDropDownIcon />}
-              aria-controls="panel2-content"
-              id="panel2-header"
+  <AccordionSummary
+    expandIcon={<ArrowDropDownIcon />}
+    aria-controls="panel2-content"
+    id="panel2-header"
+  >
+    <Typography><strong>Skills</strong></Typography>
+  </AccordionSummary>
+  <AccordionDetails>
+    <Typography>
+      <div className='flex items-center'>
+        <input
+          type="text"
+          placeholder='Enter a skill'
+          value={skillInput}
+          onChange={(e) => setSkillInput(e.target.value)}
+          className='w-[60%] rounded'
+        />
+        <div className='ml-2'>
+          {[...Array(5)].map((_, index) => (
+            <span
+              key={index}
+              onClick={() => setSkillRating(index + 1)}
+              className={`text-2xl cursor-pointer ${skillRating >= index + 1 ? 'text-yellow-500' : 'text-gray-300'}`}
             >
-              <Typography><strong>Skills</strong></Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>
-                <div className='flex'>
-                  <input
-                    type="text"
-                    placeholder='Enter a skill'
-                    value={skillInput}
-                    onChange={(e) => setSkillInput(e.target.value)}
-                    className='w-[80%] rounded'
-                  />
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      if (skillInput.trim() !== '') {
-                        setState((prevState) => ({
-                          ...prevState,
-                          skills: [...prevState.skills, skillInput.trim()],
-                        }));
-                        setSkillInput('');
-                      }
-                    }}
-                    title="Add New"
-                    className="group cursor-pointer outline-none hover:rotate-90 duration-300"
-                  >
+              &#9733;
+            </span>
+          ))}
+        </div>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            if (skillInput.trim() !== '') {
+              setState((prevState) => ({
+                ...prevState,
+                skills: [...prevState.skills, { name: skillInput.trim(), rating: skillRating }],
+              }));
+              setSkillInput('');
+              setSkillRating(0);
+            }
+          }}
+          title="Add New"
+          className="group cursor-pointer outline-none hover:rotate-90 duration-300 ml-2"
+        >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="50px"
@@ -592,12 +604,12 @@ const HomeLeft = (props, ref) => {
                       <path d="M8 12H16" strokeWidth="1.5"></path>
                       <path d="M12 16V8" strokeWidth="1.5"></path>
                     </svg>
-                  </button>
-                </div>
-                <div className='flex flex-wrap'>
-                  {state.skills.map((skill, index) => (
-                    <div key={index} className='flex items-center mb-2 ml-3 mr-2 w-full'>
-                      <div className='border p-2 w-[80%] rounded'>{skill}</div>
+                    </button>
+      </div>
+      <div className='flex flex-wrap'>
+  {state.skills.map((skill, index) => (
+    <div key={index} className='flex items-center mb-2 ml-3 mr-2 w-full'>
+      <div className='border p-2 w-[80%] rounded'>{skill.name}</div>
                       <button
                         onClick={(e) => {
                           e.preventDefault();
@@ -803,7 +815,6 @@ const HomeLeft = (props, ref) => {
                     </Typography>
                   </AccordionDetails>
                 </Accordion>
-
 
                 {/* Achivements */}
                 <Accordion>
