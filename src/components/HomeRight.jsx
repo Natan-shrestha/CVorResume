@@ -100,18 +100,17 @@ const HomeRight = (props, ref) => {
                 <p><span className='text-blue-400'><FaInstagramSquare className='text-[13px] inline' />:</span> {state.instagram}</p>
               </article>
             </div>
-
-            <div className='w-[70%] ps-3'>
+            <div className='w-[60%] ps-2'>
               <article>
                 <p className='text-[12px] font-bold text-black-700'>Skills</p>
                 {state.skills.map((skill, index) => (
-                  <div key={index} className='flex items-center'>
-                    <span>{skill.name}</span>
-                    <div className='ml-2'>
+                  <div key={index} className='flex items-center mt-1'>
+                    <span className='w-[30%]'>{skill.name}</span>
+                    <div className='w-[70%] ml-2'>
                       {[...Array(5)].map((_, i) => (
                         <span
                           key={i}
-                          className={`text-xl ${skill.rating >= i + 1 ? 'text-yellow-500' : 'text-gray-300'}`}
+                          className={`text-lg ${skill.rating >= i + 1 ? 'text-yellow-500' : 'text-gray-300'}`}
                         >
                           &#9733;
                         </span>
