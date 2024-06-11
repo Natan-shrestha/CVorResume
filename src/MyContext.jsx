@@ -5,6 +5,7 @@ import React from 'react'
 
 const MyContext = ({ children }) => {
   const [selectedImage, setSelectedImage] = useState(null);
+  const [skillRating, setSkillRating] = useState(0);
   let [state, setState] = useState(
     {
       img: "",
@@ -45,6 +46,7 @@ const MyContext = ({ children }) => {
       twitter: "",
       instagram: "",
       otherSkills: [],
+      
 
       skills: [],
 
@@ -71,7 +73,7 @@ const MyContext = ({ children }) => {
   
   let [isLoggedIn, setIsLoggedIn] = useState(false);
   return (
-    <myContext.Provider value={{ state, setState, selectedImage, setSelectedImage, isLoggedIn, setIsLoggedIn }}>{children}</myContext.Provider>
+    <myContext.Provider value={{ state, setState, selectedImage, setSelectedImage, isLoggedIn, setIsLoggedIn, skillRating, setSkillRating }}>{children}</myContext.Provider>
   )
 }
 
